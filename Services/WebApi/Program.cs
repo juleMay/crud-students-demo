@@ -1,29 +1,41 @@
-using Microsoft.OpenApi;
+using Carter;
+using DotNetEnv;
+using Microsoft.OpenApi.Models;
 using Spectre.Console;
+using WebApi.Infrastructure.Dependencies;
+
+var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
+
+if (environment.Equals("Development"))
+{
+    Env.Load();
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "Minimal API Demo",
         Version = "v1",
-        Description = ".NET Core 10 Minimal API with Swagger"
+        Description = ".NET Core 8 Minimal API with Swagger"
     });
 });
 
 builder.Services.AddHealthChecks();
+
+builder.Services.AddServices(builder.Configuration);
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
@@ -34,25 +46,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapHealthChecks("/healthz");
+app.MapControllers();
 
-// var summaries = new[]
-// {
-//     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-// };
-
-// app.MapGet("/weatherforecast", () =>
-// {
-//     var forecast = Enumerable.Range(1, 5).Select(index =>
-//         new WeatherForecast
-//         (
-//             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-//             Random.Shared.Next(-20, 55),
-//             summaries[Random.Shared.Next(summaries.Length)]
-//         ))
-//         .ToArray();
-//     return forecast;
-// })
-// .WithName("GetWeatherForecast");
+app.MapCarter();
 
 AnsiConsole.MarkupLine("[green]✓ Build completed successfully[/]");
 try
