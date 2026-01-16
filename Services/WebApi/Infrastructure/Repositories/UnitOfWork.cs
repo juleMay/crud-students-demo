@@ -5,22 +5,26 @@ using WebApi.Infrastructure.Repositories.Contracts;
 namespace WebApi.Infrastructure.Repositories;
 
 public class UnitOfWork(UniversityWriteDbContext writeContext,
-                        IGenericRepository<Student> studentRepository,
+                        IStudentRepository studentRepository,
+                        IGenericRepository<Student> studentGenericRepository,
                         IGenericRepository<Teacher> teacherRepository,
                         IGenericRepository<Course> courseRepository,
-                        IGenericRepository<CourseAssignment> courseAssignmentRepository,
-                        IGenericRepository<Enrollment> enrollmentRepository) : IUnitOfWork
+                        ICourseAssignmentRepository courseAssignmentRepository,
+                        IGenericRepository<Enrollment> enrollmentGenericRepository,
+                        IEnrollmentRepository enrollmentRepository) : IUnitOfWork
 {
 
-    public IGenericRepository<Student> StudentRepository { get; } = studentRepository;
+    public IStudentRepository StudentRepository { get; } = studentRepository;
+    public IGenericRepository<Student> StudentGenericRepository { get; } = studentGenericRepository;
 
     public IGenericRepository<Teacher> TeacherRepository { get; } = teacherRepository;
 
     public IGenericRepository<Course> CourseRepository { get; } = courseRepository;
 
-    public IGenericRepository<CourseAssignment> CourseAssignmentRepository { get; } = courseAssignmentRepository;
+    public ICourseAssignmentRepository CourseAssignmentRepository { get; } = courseAssignmentRepository;
 
-    public IGenericRepository<Enrollment> EnrollmentRepository { get; } = enrollmentRepository;
+    public IGenericRepository<Enrollment> EnrollmentGenericRepository { get; } = enrollmentGenericRepository;
+    public IEnrollmentRepository EnrollmentRepository { get; } = enrollmentRepository;
 
     private readonly UniversityWriteDbContext _writeContext = writeContext;
 

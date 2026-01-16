@@ -4,10 +4,12 @@ namespace WebApi.Infrastructure.Repositories.Contracts;
 
 public interface IUnitOfWork : IDisposable
 {
-    IGenericRepository<Student> StudentRepository { get; }
+    IStudentRepository StudentRepository { get; }
+    IGenericRepository<Student> StudentGenericRepository { get; }
     IGenericRepository<Teacher> TeacherRepository { get; }
     IGenericRepository<Course> CourseRepository { get; }
-    IGenericRepository<CourseAssignment> CourseAssignmentRepository { get; }
-    IGenericRepository<Enrollment> EnrollmentRepository { get; }
+    ICourseAssignmentRepository CourseAssignmentRepository { get; }
+    IGenericRepository<Enrollment> EnrollmentGenericRepository { get; }
+    IEnrollmentRepository EnrollmentRepository { get; }
     void Save();
 }

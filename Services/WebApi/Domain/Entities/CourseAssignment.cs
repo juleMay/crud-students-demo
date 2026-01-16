@@ -35,14 +35,14 @@ public class CourseAssignment
         return new CourseAssignment(teacherId, courseId);
     }
 
-    public Enrollment EnrollStudent(Student student)
-    {
-        if (Enrollments.Any(e => e.StudentId == student.Id && e.Status == EnrollmentStatus.Active))
-        {
-            throw new InvalidOperationException("Student already enrolled");
-        }
-        var enrollment = Enrollment.Create(student.Id, Id);
-        Enrollments.Add(enrollment);
-        return enrollment;
-    }
+    // public Enrollment EnrollStudent(Student student)
+    // {
+    //     if (Enrollments.Any(e => e.StudentId == student.Id && e.Status == EnrollmentStatus.Active))
+    //     {
+    //         throw new InvalidOperationException("Student already enrolled");
+    //     }
+    //     var enrollment = Enrollment.Create(student.Id, Id);
+    //     Enrollments.Add(enrollment);
+    //     return enrollment;
+    // }
 }
