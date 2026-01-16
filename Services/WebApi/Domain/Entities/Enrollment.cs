@@ -1,3 +1,4 @@
+using WebApi.Domain.Contracts;
 using WebApi.Domain.Enums;
 
 namespace WebApi.Domain.Entities;
@@ -24,13 +25,15 @@ public class Enrollment
         EnrolledAt = DateTime.UtcNow;
     }
 
-    public static Enrollment Create(Guid studentId, Guid courseAssignmentId)
+    public static Enrollment Create(IEnrollmentDto enrollmentDto)
     {
-        if (studentId == Guid.Empty)
+        var studentId = enrollmentDto.GetStudentId();
+        var courseAssignmentId = enrollmentDto.GetCourseAssignmentId();
+        if (studentId.Equals(Guid.Empty))
         {
             throw new ArgumentException("Student is required");
         }
-        if (courseAssignmentId == Guid.Empty)
+        if (courseAssignmentId.Equals(Guid.Empty))
         {
             throw new ArgumentException("Course assignment is required");
         }
@@ -46,5 +49,15 @@ public class Enrollment
         }
         Status = EnrollmentStatus.Withdrawn;
         WithdrawnAt = DateTime.UtcNow;
+    }
+
+    public void Reactivate()
+    {
+        if (Status != EnrollmentStatus.Withdrawn)
+        {
+            throw new InvalidOperationException("Only withdrawn enrollments can be reactivated");
+        }
+        Status = EnrollmentStatus.Active;
+        WithdrawnAt = null;
     }
 }

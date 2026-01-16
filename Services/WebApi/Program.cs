@@ -50,6 +50,14 @@ app.MapControllers();
 
 app.MapCarter();
 
+app.UseCors(builder =>
+{
+    builder
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+});
+
 AnsiConsole.MarkupLine("[green]✓ Build completed successfully[/]");
 try
 {

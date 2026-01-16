@@ -35,6 +35,9 @@ public static class DependencyInjection
             DbContextConfiguration.ReadOptions(options, appSettings.ConectionString);
         });
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        services.AddScoped<ICourseAssignmentRepository, CourseAssignmentRepository>();
+        services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+        services.AddScoped<IStudentRepository, StudentRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         return services;
     }
