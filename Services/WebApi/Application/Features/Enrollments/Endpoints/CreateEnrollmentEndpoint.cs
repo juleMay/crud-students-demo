@@ -11,7 +11,7 @@ public class CreateEnrollmentEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("api/enrollment", CreateEnrollment)
+        app.MapPost("api/enrollments", CreateEnrollment)
             .Produces<CreateEnrollmentCommandResponse>(StatusCodes.Status201Created)
             .ProducesValidationProblem()
             .WithTags("Enrollments");
@@ -20,6 +20,6 @@ public class CreateEnrollmentEndpoint : ICarterModule
     private static async Task<IResult> CreateEnrollment([FromBody] EnrollmentDto studentDto, [FromServices] IMediator mediator)
     {
         var student = await mediator.Send(new CreateEnrollmentCommand(studentDto));
-        return Results.Created($"api/enrollment/{student.EnrollmentId}", student.EnrollmentDto);
+        return Results.Created($"api/enrollments/{student.EnrollmentId}", student.EnrollmentDto);
     }
 }
