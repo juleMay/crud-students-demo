@@ -1,0 +1,9 @@
+<div class="btn-group" aria-label="Theme Toggler" id="themeToggler">
+    <input type="radio" class="btn-check" name="btnradio" id="btnLightTheme" autocomplete="off"
+        [class.active]="isActive('light')" (click)="setTheme('light')" (keypress)="setTheme('light')">
+    <label class="btn btn-outline-light" for="btnLightTheme"><i class="bi bi-brightness-high-fill"></i> Light</label>
+
+    <input type="radio" class="btn-check" name="btnradio" id="btnDarkTheme" autocomplete="off"
+        [class.active]="isActive('dark')" (click)="setTheme('dark')" (keypress)="setTheme('dark')">
+    <label class="btn btn-outline-light" for="btnDarkTheme"><i class="bi bi-moon-stars-fill"></i> Dark</label>
+</div>

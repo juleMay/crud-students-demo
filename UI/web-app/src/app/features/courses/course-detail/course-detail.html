@@ -1,0 +1,64 @@
+<div class="card">
+  <div class="card-header">
+    <div class="container">
+      <div class="row justify-content-around">
+        <div class="col align-self-center">
+          Course Details
+        </div>
+        <div class="col text-end">
+          <div class="btn-group" aria-label="Course Detail Actions" id="courseDetailActions">
+            @if (enrollment?.id === emptyId || this.enrollment?.status === EnrollmentStatus.WITHDRAWN) {
+            <button type="button" class="btn btn-outline-primary" (click)="enrollToCourse()"
+              (keypress)="enrollToCourse()"><i class="bi bi-file-earmark-check-fill"></i>
+              @if(enrollment?.id !== emptyId) {
+              Reenroll
+              }
+              @else {
+              Enroll
+              }
+            </button>
+            }
+            @else{
+            <button type="button" class="btn btn-outline-danger" (click)="withdrawFromCourse()"
+              (keypress)="withdrawFromCourse()"><i class="bi bi-file-earmark-x-fill"></i> Withdraw</button>
+            }
+            <button type="button" class="btn btn-outline-primary" (click)="goBack()" (keypress)="goBack()"><i
+                class="bi bi-arrow-left-square-fill"></i> Go
+              back</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="container p-2">
+      <div class="row justify-content-between">
+        <div class="col align-self-center">
+          @if(course){
+          <h5 class="card-title">{{ course.courseName }}</h5>
+          <p class="card-text">Teacher: {{ course.teacherName }}.</p>
+          <p class="card-text">Credits: {{ course.credits }}.</p>
+          }
+          @else {
+          <h5 class="card-title">Course Name</h5>
+          <p class="card-text">Teacher: Teacher's name.</p>
+          <p class="card-text">Credits: Number of credits.</p>
+          }
+        </div>
+        <div class="col align-self-center">
+          <h5 class="card-title">Enrolled Students</h5>
+          @if (!loading) {
+          <app-generic-table [table]="table" [totalItems]="totalItems" (pageChange)="onPageChange($event)"
+            (sortChange)="onSort($event)">
+          </app-generic-table>
+          <app-pagination [pagination]="pagination" (pageChange)="onPageChange($event)"
+            (pageSizeChange)="onPageSizeChange($event)" />
+          }
+          @else {
+          <p>Loading...</p>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
