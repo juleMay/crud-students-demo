@@ -9,7 +9,7 @@ public class UpdateEnrollmentEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPut("api/Enrollments/{enrollmentId}", UpdateEnrollment)
+        app.MapPut("api/enrollments/{enrollmentId}", UpdateEnrollment)
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesValidationProblem()

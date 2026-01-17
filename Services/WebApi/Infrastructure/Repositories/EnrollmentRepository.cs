@@ -1,6 +1,7 @@
 using System.Linq.Dynamic.Core;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Domain.Entities;
+using WebApi.Domain.Enums;
 using WebApi.Infrastructure.Contexts;
 using WebApi.Infrastructure.Pagination.Dtos;
 using WebApi.Infrastructure.Repositories.Contracts;
@@ -16,7 +17,7 @@ public class EnrollmentRepository(UniversityReadDbContext readDbContext) : IEnro
         var query = _readDbContext.Enrollments
             .Include(x => x.CourseAssignment)
             .Include(x => x.Student)
-            .Where(x => x.CourseAssignmentId.Equals(courseAssignmentId))
+            .Where(x => x.CourseAssignmentId.Equals(courseAssignmentId) && x.Status.Equals(EnrollmentStatus.Active))
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(pagedRequest.SortBy))

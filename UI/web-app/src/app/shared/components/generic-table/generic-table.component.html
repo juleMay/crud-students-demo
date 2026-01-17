@@ -1,0 +1,72 @@
+<table class="table table-hover align-middle">
+  <thead>
+    <tr>
+      @for (header of table.headers; track header.label) {
+        <th
+          (click)="onSort(header)" (keypress)="onSort(header)"
+          [class.cursor-pointer]="header.sortable"
+        >
+          {{ header.label }}
+
+          @if (header.sortable && currentSort?.key === header.sortKey) {
+            <span class="ms-1">
+              {{ currentSort.direction === 'asc' ? '▲' : '▼' }}
+            </span>
+          }
+        </th>
+      }
+
+      @if (table.hasActions) {
+        <th>Actions</th>
+      }
+    </tr>
+  </thead>
+
+  <tbody>
+    @if (loading) {
+      <tr>
+        <td
+          [attr.colspan]="table.headers.length + (table.hasActions ? 1 : 0)"
+          class="text-center py-4"
+        >
+          Loading...
+        </td>
+      </tr>
+    } @else {
+      @for (row of table.rows; track row.id) {
+        <tr>
+          @for (cell of row.cells; track cell; let colIndex = $index) {
+            <td>
+              @if (cellTemplate) {
+                <ng-container
+                  *ngTemplateOutlet="cellTemplate;
+                    context: {
+                      $implicit: cell,
+                      row: row,
+                      colIndex: colIndex
+                    }"
+                />
+              } @else {
+                {{ cell }}
+              }
+            </td>
+          }
+
+          @if (table.hasActions) {
+            <td>
+              @for (action of row.actions ?? []; track action.label) {
+                <button
+                  class="btn btn-sm me-1"
+                  [ngClass]="action.buttonClass"
+                  (click)="action.action(row)"
+                >
+                  {{ action.label }}
+                </button>
+              }
+            </td>
+          }
+        </tr>
+      }
+    }
+  </tbody>
+</table>

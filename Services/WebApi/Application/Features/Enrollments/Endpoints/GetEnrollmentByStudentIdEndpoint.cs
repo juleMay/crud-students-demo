@@ -10,7 +10,7 @@ public class GetEnrollmentByStudentIdEndpoint() : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("api/enrrollments/students/{studentId}/course-assignments/{courseAssignmentId}", GetCourseAssignments)
+        app.MapGet("api/enrollments/students/{studentId}/course-assignments/{courseAssignmentId}", GetCourseAssignments)
             .Produces<GetEnrollmentByStudentIdQueryResponse>()
             .Produces(StatusCodes.Status404NotFound)
             .WithTags("Enrollments");
