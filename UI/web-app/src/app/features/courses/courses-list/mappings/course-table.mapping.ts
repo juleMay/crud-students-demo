@@ -3,9 +3,9 @@ import { CourseListItem } from "../models/course-list-response.model";
 
 export const COURSE_TABLE_MAPPING: TableMapping<CourseListItem> = {
   headers: [
-    { label: 'Course', sortable: true, sortKey: 'courseName' },
-    { label: 'Credits', sortable: true, sortKey: 'credits' },
-    { label: 'Teacher', sortable: true, sortKey: 'teacherName' },
+    { label: 'Course', sortable: true, sortKey: 'Course.Name' },
+    { label: 'Credits', sortable: true, sortKey: 'Course.Credits' },
+    { label: 'Teacher', sortable: true, sortKey: 'Teacher.Name.FirstSurname' },
   ],
   columns: [
     c => c.courseName,

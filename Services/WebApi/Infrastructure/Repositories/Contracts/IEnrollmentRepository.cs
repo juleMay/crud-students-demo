@@ -6,5 +6,6 @@ namespace WebApi.Infrastructure.Repositories.Contracts;
 public interface IEnrollmentRepository
 {
     IQueryable<Enrollment> GetAll(Guid courseAssignmentId, PagedRequestDto pagedRequest);
+    IQueryable<Enrollment> GetAll(Guid studentId);
     Enrollment? GetByStudentAndCourseAssignment(Guid studentId, Guid courseAssignmentId);
 }

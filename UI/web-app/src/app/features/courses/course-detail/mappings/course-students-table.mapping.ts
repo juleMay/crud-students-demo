@@ -3,7 +3,7 @@ import { CourseStudentsListItem } from "../models/course-students-list-response.
 
 export const COURSE_STUDENTS_TABLE_MAPPING: TableMapping<CourseStudentsListItem> = {
   headers: [
-    { label: 'Student', sortable: true, sortKey: 'studentName' },
+    { label: 'Student', sortable: true, sortKey: 'Student.Name.FirstSurname' },
   ],
   columns: [
     c => c.studentName,

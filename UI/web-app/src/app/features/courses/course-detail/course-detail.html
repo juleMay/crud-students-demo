@@ -47,16 +47,11 @@
         </div>
         <div class="col align-self-center">
           <h5 class="card-title">Enrolled Students</h5>
-          @if (!loading) {
           <app-generic-table [table]="table" [totalItems]="totalItems" (pageChange)="onPageChange($event)"
             (sortChange)="onSort($event)">
           </app-generic-table>
           <app-pagination [pagination]="pagination" (pageChange)="onPageChange($event)"
             (pageSizeChange)="onPageSizeChange($event)" />
-          }
-          @else {
-          <p>Loading...</p>
-          }
         </div>
       </div>
     </div>

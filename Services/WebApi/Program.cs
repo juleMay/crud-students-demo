@@ -3,6 +3,7 @@ using DotNetEnv;
 using Microsoft.OpenApi.Models;
 using Spectre.Console;
 using WebApi.Infrastructure.Dependencies;
+using WebApi.Infrastructure.Middlewares;
 
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
 
@@ -32,6 +33,8 @@ builder.Services.AddServices(builder.Configuration);
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+app.UseMiddleware<AppErrorMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

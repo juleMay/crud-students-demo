@@ -23,8 +23,8 @@ export interface RowActions {
 }
 
 export interface RowActionRule {
-  when: (row: TableRow) => boolean;
-  actions: RowActions[];
+    when: (row: TableRow) => boolean;
+    actions: RowActions[];
 }
 
 export enum ButtonClass {
@@ -39,8 +39,8 @@ export enum ButtonClass {
 }
 
 export interface SortEvent {
-    key: string;
-    direction: 'asc' | 'desc';
+    sortKey: string | null;
+    direction: 'asc' | 'desc' | '';
 }
 
 export interface PageEvent {

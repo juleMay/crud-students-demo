@@ -1,12 +1,16 @@
 using System.Reflection;
 using Carter;
 using FluentValidation;
+using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.Extensions.Options;
 using Spectre.Console;
+using WebApi.Application.Features.Enrollments.Validators;
 using WebApi.Infrastructure.Contexts;
 using WebApi.Infrastructure.Options;
 using WebApi.Infrastructure.Repositories;
 using WebApi.Infrastructure.Repositories.Contracts;
+using WebApi.Infrastructure.Validations;
 
 namespace WebApi.Infrastructure.Dependencies;
 
@@ -39,6 +43,9 @@ public static class DependencyInjection
         services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
         services.AddScoped<IStudentRepository, StudentRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddFluentValidationAutoValidation();
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
         return services;
     }
 }

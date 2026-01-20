@@ -36,6 +36,14 @@ public class EnrollmentRepository(UniversityReadDbContext readDbContext) : IEnro
         return query;
     }
 
+    public IQueryable<Enrollment> GetAll(Guid studentId)
+    {
+        var query = _readDbContext.Enrollments
+            .Where(x => x.StudentId.Equals(studentId))
+            .AsQueryable();
+        return query;
+    }
+
     public Enrollment? GetByStudentAndCourseAssignment(Guid studentId, Guid courseAssignmentId)
     {
         var query = _readDbContext.Enrollments
