@@ -74,12 +74,20 @@ export class CoursesList implements OnInit {
   }
 
   onSort(sort: SortEvent) {
+    const queryParams: any = {
+      page: 1,
+    };
+
+    if (sort.sortKey && sort.direction) {
+      queryParams.sortKey = sort.sortKey;
+      queryParams.sortDirection = sort.direction;
+    } else {
+      queryParams.sortKey = null;
+      queryParams.sortDirection = null;
+    }
+
     this.router.navigate([], {
-      queryParams: {
-        sortKey: sort.key,
-        dir: sort.direction,
-        page: 1,
-      },
+      queryParams,
       queryParamsHandling: 'merge',
     });
   }

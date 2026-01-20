@@ -5,6 +5,8 @@ import {
   EventEmitter,
   ContentChild,
   TemplateRef,
+  ChangeDetectorRef,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SortEvent, Table, TableHeader } from '../../models/table.model';
@@ -21,6 +23,7 @@ export class GenericTableComponent {
   @Input() pageSize = PAGINATION.PAGE_SIZE;
   @Input() totalItems?: number;
   @Input() loading = false;
+  private readonly cdr = inject(ChangeDetectorRef);
 
   @Output() pageChange = new EventEmitter<number>();
   @Output() sortChange = new EventEmitter<SortEvent>();
@@ -28,27 +31,34 @@ export class GenericTableComponent {
   @ContentChild('cellTemplate') cellTemplate?: TemplateRef<any>;
 
   currentPage = 1;
-  currentSort?: SortEvent;
+  currentSort: SortEvent = { sortKey: null, direction: '' };
 
   get totalPages(): number {
     const total = this.totalItems ?? this.table.rows.length;
     return Math.ceil(total / this.pageSize);
   }
 
-  onSort(header: TableHeader) {
-    if (!header.sortable || !header.sortKey) return;
+  onSort(header: TableHeader): void {
+    if (!header.sortable) return;
 
-    const direction =
-      this.currentSort?.key === header.sortKey &&
-      this.currentSort.direction === 'asc'
-        ? 'desc'
-        : 'asc';
-
-    this.currentSort = {
-      key: header.sortKey,
-      direction,
-    };
+    if (this.currentSort.sortKey !== header.sortKey) {
+      this.currentSort = { sortKey: header.sortKey, direction: 'asc' };
+    }
+    else if (this.currentSort.direction === 'asc') {
+      this.currentSort = { sortKey: header.sortKey, direction: 'desc' };
+    }
+    else {
+      this.currentSort = { sortKey: null, direction: '' };
+    }
 
     this.sortChange.emit(this.currentSort);
+  }
+
+  isSorted(header: TableHeader, dir: 'asc' | 'desc'): boolean {
+    if (!header.sortable) return;
+    return (
+      this.currentSort.sortKey === header.sortKey &&
+      this.currentSort.direction === dir
+    );
   }
 }
