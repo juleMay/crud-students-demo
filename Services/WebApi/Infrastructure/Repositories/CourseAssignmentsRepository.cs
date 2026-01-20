@@ -34,14 +34,14 @@ public class CourseAssignmentRepository(UniversityReadDbContext readDbContext) :
         return query;
     }
 
-    public IQueryable<CourseAssignment> GetById(Guid courseAssignmentId)
+    public IQueryable<CourseAssignment> GetById(Guid courseId)
     {
         var query = _readDbContext.CourseAssignments
             .Include(x => x.Course)
             .Include(x => x.Teacher)
             .Include(x => x.Enrollments)
             .ThenInclude(x => x.Student)
-            .Where(x => x.Id.Equals(courseAssignmentId))
+            .Where(x => x.Id.Equals(courseId))
             .AsQueryable();
 
         return query;

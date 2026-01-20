@@ -1,0 +1,35 @@
+@if (error$ | async; as error) {
+<div class="modal-backdrop fade show"></div>
+<div class="modal fade show d-block" tabindex="-1" aria-modal="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-danger">
+
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">
+          {{ error.title || 'Error' }}
+        </h5>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="close()"></button>
+      </div>
+
+      <div class="modal-body">
+        <p>{{ error.message }}</p>
+
+        @if (error.details?.length) {
+        <ul class="mt-2">
+          @for (detail of error.details; track detail) {
+          <li>{{ detail }}</li>
+          }
+        </ul>
+        }
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="close()">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+}

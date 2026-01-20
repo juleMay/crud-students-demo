@@ -1,10 +1,13 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideRouter } from '@angular/router';
-import { appRoutes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
 
-bootstrapApplication(AppComponent, {
-  providers: [
-    provideRouter(appRoutes),
-  ],
-});
+async function bootstrap() {
+  try {
+    await bootstrapApplication(AppComponent, appConfig);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+await bootstrap();
